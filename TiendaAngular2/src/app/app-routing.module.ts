@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InicioComponent } from './inicio/inicio.component';
-import { TiendaComponent} from './tienda/tienda.component'
-//import { NuevaTareaComponent } from './nueva-tarea/nueva-tarea.component';
-//import { VerGrupoComponent } from './ver-grupo/ver-grupo.component';
-//import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { TiendaComponent} from './components/tienda/tienda.component'
 
 const routes: Routes = [
-  { path: '', component: InicioComponent, pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
   { path: 'tienda', component: TiendaComponent, pathMatch: 'full' },
-  //{ path: 'inicio/nueva-tarea', component: NuevaTareaComponent },
-  //{ path: 'inicio/ver-grupo/:nombre', component: VerGrupoComponent}
+  { path: 'tienda/detalle-producto/:id', component: TiendaComponent},
+  { path: 'carrito', component: TiendaComponent},
+  { path: '**', pathMatch: 'full', redirectTo: 'login' }
 ];
 
 @NgModule({

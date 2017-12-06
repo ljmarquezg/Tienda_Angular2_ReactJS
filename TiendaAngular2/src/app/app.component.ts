@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { InicioComponent } from './inicio/inicio.component'
+//import { LoginComponent } from './components/login/login.component'
+//import { AngularFire,  } from 'angularfire2';
+
+
 
 @Component({
   selector: 'app-root',
