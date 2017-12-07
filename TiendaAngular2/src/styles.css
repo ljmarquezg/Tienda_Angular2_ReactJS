@@ -125,11 +125,20 @@ form .ng-invalid ~ span.error, form .mensaje {
   padding: 5px;
 }
 
+.btn.bottom{
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
 .box {
 	box-shadow: 0 0 2px 0 lightgray;
 	background: white;
 	border-radius: 5px;
 	overflow: hidden;
+	position: relative;
+}
+.box.carrito {
+	padding:20px;
 }
 .box .img{
   position: relative;
@@ -209,7 +218,23 @@ form .ng-invalid ~ span.error, form .mensaje {
 	line-height: 15px;
 }
 
-
+.no-padding{
+  padding:0 !important;
+}
+li.list-group-item {
+	margin:0;
+}
+li.list-group-item img{
+  height: auto;
+  width: 100%;
+}
+li.list-group-item .footer {
+	display: table;
+	width: 100%;
+	padding: 0px 20px;
+	font-weight: 600;
+	border-top: solid 1px lightgray;
+}
 .animated.fast {
   animation-duration: 1.5s;
   animation-fill-mode: both;
@@ -281,4 +306,15 @@ form .ng-invalid ~ span.error, form .mensaje {
 
 .fadeInUpBig {
   animation-name: fadeInUpBig;
+}
+
+@media(min-width: 1024px){
+  li.list-group-item img{
+    height: 150px;
+    width: auto;
+  }
+  .informacion {
+  	padding: 10px 20px;
+  	border-top: 0;
+  }
 }

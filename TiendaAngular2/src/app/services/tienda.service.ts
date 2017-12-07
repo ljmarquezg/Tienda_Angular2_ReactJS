@@ -5,7 +5,7 @@ import { Producto } from '../models/Producto'
 import 'rxjs/Rx';
 
 @Injectable()
-export class ProductoService {
+export class TiendaService {
 
   constructor(private http : Http, private router : Router) { }
   public catalogo : Producto[];
@@ -34,4 +34,14 @@ export class ProductoService {
       }
     )
   }
+
+  public filtrarProducto(filtro){
+    return this.http.get(`https://tienda-angular2.firebaseio.com/productos/.json`)
+    .map((response : Response) => {
+        return this.productoCatalogo =  response.json()
+      }
+    )
+  }
+
+
 }

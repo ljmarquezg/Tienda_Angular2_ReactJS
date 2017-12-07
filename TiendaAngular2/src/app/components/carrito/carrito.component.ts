@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+//======================Importar Servicios======================================
+import { CarritoService } from '../../services/carrito.service';
+//======================Importar Modelos========================================
+import { ProductoCarrito } from '../../models/ProductoCarrito';
+//==============================================================================
 
 @Component({
   selector: 'carrito',
@@ -7,19 +11,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent implements OnInit {
+  public listaCarrito : ProductoCarrito[] = []; //Crear un arreglo de productos para almacenar los productos guardados en el carrito
+  public titulo: string;
 
-  //mostrarContador : boolean;
-
-  constructor() {
-  //this.mostrarContador = true;
- }
+  constructor(private carritoService : CarritoService) {
+    this.titulo = 'Carrito de compras';
+   }
 
   ngOnInit() {
+      this.listaCarrito = this.carritoService.itemsCarrito()
   }
 
-
-  guardarCarrito(id){
-    window.alert('Guardando producto ' + id)
-  }
+  //==============Calcular Totales================================================
+    total(){
+      let total :number = 0
+      let items = this.carritoService.listaCarrito
+      for(let subtotal of items ){
+       total += subtotal.disponible * subtotal.precio;
+      }
+      return total;
+    }
 
 }

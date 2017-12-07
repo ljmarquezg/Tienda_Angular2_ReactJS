@@ -1,25 +1,46 @@
 <div class="tienda">
   <div class="container">
     <barra-superior></barra-superior>
-    <div class="box">
-      <h2 class="titulo">Carrito</h2>
-    </div>
-    <ul class="producto nav animated fadeIn slow">
-      <li class="col-md-3 col-sm-4 col-xs-12" *ngFor="let item of listaProductos">
-        <div class="box">
-          <div class="img">
-            <img src="{{item.imagen}}" alt="{{item.descripcion}}" class="img-responsive">
-            <h4 class="text-center"><{{item.descripcion}}></h4>
+    <div class="box carrito" >
+      <h2 class="titulo animated fadeIn slow">{{titulo}}</h2>
+    <ul class="producto list-group col-sm-6 col-xs-12 animated fadeIn slow">
+      <li class="list-group-item col-xs-12 no-padding" *ngFor="let item of listaCarrito" [ngStyle]="{background:'#ededed'}">
+        <div class="col-xs-12 no-padding">
+          <div class="img no-padding pull-left">
+            <img src="{{item.imagen}}" alt="{{item.descripcion}}" class="img-responsive no-padding">
           </div>
-          <div class="informacion">
-            <p><small><b>Precio: </b><{{item.precio | currency : 'USD' : 1-0-2 }}></small></p>
-            <p><small><b>Disponibles: </b><{{item.disponible}}></small></p>
+          <div class="informacion col-md-6 col-sm-12 col-xs-12">
+            <h5 class="text-left">{{item.descripcion}}</h5>
+            <p><small><b>Precio: </b>{{item.precio | currency : 'USD' : 1-0-2 }}</small></p>
+            <p><small><b>Cantidad: </b>{{item.disponible}}</small></p>
+            <!--div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-warning" type="button" (click)="agregarProducto(item.id, agregar.value)">Eliminar</button>
+              </span>
+              <input type="number" [value]="0" min="0" max={{item.disponible}} class="form-control text-right" id="disponible"  #agregar>
+            </div-->
           </div>
-          <div class="box footer">
-            <a [routerLink]="['/tienda/detalle-producto/', item.id]" class="btn btn-secundary">Ver Detalle</a>
+          <div class="list-group-item footer">
+            <div class="no-padding col-xs-6 text-right">
+              <h5><b>Subtotal: </b></h5>
+            </div>
+            <div class="no-padding col-xs-6 text-right">
+              <h5>{{this.carritoService.subtotal(item.precio, item.disponible) | currency : 'USD' : 1-0-2}}</h5>
+            </div>
           </div>
         </div>
       </li>
     </ul>
+    <div class="col-xs-6 animated fadeIn slow">
+      <h2 class="text-right"> Total a pagar:</h2>
+      <h3 class="text-right">{{ this.total() | currency : 'USD' : 1-0-2}}</h3>
+        <p class="pull-right">
+          <button class="btn btn-success " type="button" (click)="agregarProducto(item.id, agregar.value)"><i class="material-icons">credit_card</i> Pagar</button>
+        </p>
+    </div>
+    <p class="btn bottom">
+      <button class="btn btn-secundary " type="button" (click)="vaciarCarrito()"><i class="material-icons">delete</i> Vaciar Carrito</button>
+    </p>
   </div>
+</div>
 </div>
