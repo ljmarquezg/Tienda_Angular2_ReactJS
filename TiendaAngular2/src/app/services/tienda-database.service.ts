@@ -21,7 +21,7 @@ export class TiendaDatabaseService {
     )
   }*/
 
-  compararUsuarios(loginUser){
+  /*compararUsuarios(loginUser){
     let match = false; //Inicializar vaiable comparativa con valor falso
     this.listaUsuarios.forEach(element => { //Recorrer el array de objetos devueltos por el servidor
       if(match === false ){ //Verificar que el valor sea falso
@@ -37,7 +37,7 @@ export class TiendaDatabaseService {
     })
     return this.error; //Devolver el error
   }
-
+*/
 
   /*login(username:string, password:string){
   /*  this.database.login(username, password).subscribe();*/

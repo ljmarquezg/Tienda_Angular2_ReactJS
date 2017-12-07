@@ -4,20 +4,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; //Inyectar lo
 import { HttpModule } from '@angular/http';
 import { AngularFireModule } from 'angularfire2'; //Inyectar los componentes de angularfire2
 
-/*Services*/
+//======================Importar Servicios====================================
 import { AuthService} from "./services/auth.service";
-import { DatabaseService } from './services/database.service'; //Incluir el servicio DatabaseServices
-import { TiendaDatabaseService } from './services/tienda-database.service'; //Incluir el servicio TiendaDatabaseServices
-
-/*Components*/
+import { ProductoService } from './services/producto.service';
+import { CarritoService } from './services/carrito.service'
+//import { DatabaseService } from './services/database.service'; //Incluir el servicio DatabaseServices
+//import { TiendaDatabaseService } from './services/tienda-database.service'; //Incluir el servicio TiendaDatabaseServices
+//======================Importar Componentes====================================
 import { AppComponent } from './app.component';
 import { TiendaRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/login/login.component';
 import { TiendaComponent } from './components/tienda/tienda.component';
 import { BarraSuperiorComponent } from './components/barra-superior/barra-superior.component';
-import { ListaProductosComponent } from './components/tienda/lista-productos/lista-productos.component';
-import { ComponentsComponent } from './components/components.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
+import { DetalleProductoComponent } from './components/tienda/detalle-producto/detalle-producto.component';
+//==============================================================================
+//import { MilesPipe } from './pipes/miles.pipe';
+//import { MonedaPipe } from './pipes/moneda.pipe';
+//import { ListaProductosComponent } from './components/tienda/lista-productos/lista-productos.component';
+//import { ComponentsComponent } from './components/components.component';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAIEmj4GhV5uj1iI9yM30DTQgXabiezy5w",
@@ -34,9 +40,12 @@ export const firebaseConfig = {
     BarraSuperiorComponent,
     LoginComponent,
     TiendaComponent,
-    ListaProductosComponent,
-    ComponentsComponent,
-    CarritoComponent
+    //ListaProductosComponent,
+    //ComponentsComponent,
+    CarritoComponent,
+    //MonedaPipe,
+    DetalleProductoComponent,
+    //MilesPipe
   ],
   imports: [
     BrowserModule,
@@ -46,7 +55,7 @@ export const firebaseConfig = {
     ReactiveFormsModule, //Inyectar el módulo ReactiveForms
     TiendaRoutingModule //Agregar el modulo TareasRouting para el manejo de las URL
   ],
-  providers: [AuthService,TiendaDatabaseService, DatabaseService], //Inyectar los servicios TiendaDatabaseService y DatabaseService dentro de la aplicacion
+  providers: [AuthService, ProductoService, CarritoService/*, TiendaDatabaseService, DatabaseService*/], //Inyectar los servicios TiendaDatabaseService y DatabaseService dentro de la aplicacion
   bootstrap: [AppComponent]
 })
 export class AppModule { }

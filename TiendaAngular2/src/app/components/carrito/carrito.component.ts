@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
-  selector: 'app-carrito',
+  selector: 'carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent implements OnInit {
 
-  constructor() { }
+  //mostrarContador : boolean;
+
+  constructor() {
+  //this.mostrarContador = true;
+ }
 
   ngOnInit() {
+  }
+
+
+  guardarCarrito(id){
+    window.alert('Guardando producto ' + id)
   }
 
 }

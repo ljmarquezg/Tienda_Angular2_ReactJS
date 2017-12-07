@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           console.log ('Email correcto: ' + data.email)
           if (data.password == this.password){ //Si el usuario existe, verificar su contraseña
             this.mensaje = "Iniciando Sesión"; /*Mostrar mensaje en el formulario*/
-            sessionStorage.setItem("Session", this.email); /*Definir el sessionStorage la llave "Session" con el valor del email validado*/
+            sessionStorage.setItem("Session", this.loginForm.value.email); /*Definir el sessionStorage la llave "Session" con el valor del email validado*/
             console.log(this.mensaje); /*Mostrar mensaje en cónsola*/
             this.router.navigate(['tienda']); /*Redireccionar a la tienda*/
           }else{

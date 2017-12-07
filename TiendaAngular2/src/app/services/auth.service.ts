@@ -28,8 +28,10 @@ export class AuthService {
     this.router.navigate(['login'])
   }
 
-    checkSession(){
-    console.log(sessionStorage.getItem("Session"))
+  checkSession(){
+    if(sessionStorage.getItem("Session")){
+      console.log("Bienvenido "+sessionStorage.getItem("Session"))
+    }
     return sessionStorage.getItem("Session"); //Verificar si hay una sesión iniciada
   }
 
