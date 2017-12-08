@@ -9,16 +9,17 @@
           <div class="img no-padding pull-left">
             <img src="{{item.imagen}}" alt="{{item.descripcion}}" class="img-responsive no-padding">
           </div>
-          <div class="informacion col-md-6 col-sm-12 col-xs-12">
+          <div class="informacion">
+            <span class="pull-right"><i class="material-icons cursor" (click)="showModal()" >highlight_off</i></span><!--(click)="eliminarProducto(item.id, null)"-->
             <h5 class="text-left">{{item.descripcion}}</h5>
             <p><small><b>Precio: </b>{{item.precio | currency : 'USD' : 1-0-2 }}</small></p>
             <p><small><b>Cantidad: </b>{{item.disponible}}</small></p>
-            <!--div class="input-group">
+            <div class="input-group">
               <span class="input-group-btn">
-                <button class="btn btn-warning" type="button" (click)="agregarProducto(item.id, agregar.value)">Eliminar</button>
+                <button class="btn btn-warning" type="button" (click)="eliminarProducto(item.id, eliminar.value)">Eliminar</button>
               </span>
-              <input type="number" [value]="0" min="0" max={{item.disponible}} class="form-control text-right" id="disponible"  #agregar>
-            </div-->
+              <input type="number" [value]="0" min="0" max={{item.disponible}} class="form-control text-right" id="disponible"  #eliminar>
+            </div>
           </div>
           <div class="list-group-item footer">
             <div class="no-padding col-xs-6 text-right">
@@ -43,4 +44,29 @@
     </p>
   </div>
 </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" #modal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <header class="font-12 bold">Modal Header</header>
+                </div>
+                <div class="modal-body">
+                    Your Content ...
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">close</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

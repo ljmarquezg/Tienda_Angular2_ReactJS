@@ -9,9 +9,6 @@ export class CarritoService {
   constructor() {
       this.totales = [];
    }
-
-
-
 //============Verificar items en el carrito=====================================
   itemsCarrito(){
     if(sessionStorage.getItem("Carrito")){
@@ -54,5 +51,8 @@ export class CarritoService {
     this.totales.push(subtotal)
     return subtotal
   }
-
+//=============Eliminar Carrito=============================================
+  eliminarCarrito(listaCarrito){
+    sessionStorage.setItem("Carrito", JSON.stringify(listaCarrito))
+  }
 }
