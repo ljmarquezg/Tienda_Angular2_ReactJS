@@ -21,10 +21,6 @@ export class CarritoService {
   contadorCarrito(){
     return this.itemsCarrito().length
   }
-//============Vaciar los items del carrito======================================
-  vaciarCarrito(){
-    sessionStorage.removeItem('Carrito');
-  }
 //===Verificar existencia en el carrito para evitar items duplicados============
   verificarCarrito(item){
     if(this.guardarCarrito(item) == false){
@@ -55,4 +51,5 @@ export class CarritoService {
   eliminarCarrito(listaCarrito){
     sessionStorage.setItem("Carrito", JSON.stringify(listaCarrito))
   }
+
 }

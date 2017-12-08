@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms'; //Importar los componentes ForModule, FormControl y Validator para manejar y validar los formularios
 import { CurrencyPipe } from '@angular/common'
@@ -18,7 +18,8 @@ import { ProductoCarrito } from '../../models/ProductoCarrito';
 @Component({
   selector: 'tienda',
   templateUrl: './tienda.component.html',
-  styleUrls: ['./tienda.component.css']
+  styleUrls: ['./tienda.component.css'],
+
 })
 export class TiendaComponent implements OnInit {
 
@@ -69,6 +70,7 @@ export class TiendaComponent implements OnInit {
           this.tiendaCarrito = tiendaEncontrado
           this.tiendaCarrito.disponible = value
           this.carritoService.verificarCarrito(this.tiendaCarrito);
+          //this.cambiarEstado()
         }
      }
     )

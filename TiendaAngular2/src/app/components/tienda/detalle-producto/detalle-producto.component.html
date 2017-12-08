@@ -2,55 +2,49 @@
   <div class="container">
     <barra-superior></barra-superior>
     <div class="detalle" *ngIf="informacionProducto" class="animated fadeInDownBig fast">
-    <div class="box col-xs-12">
-      <div class="titulo">
-        <h2>{{informacionProducto.descripcion}}</h2>
-      </div>
-      <div class="descripcion">
-        <div class="col-xs-6">
-          <img class="img-responsive" src="{{informacionProducto.imagen}}">
+      <div class="box col-xs-12">
+        <div class="titulo">
+          <h2>{{informacionProducto.descripcion}}</h2>
         </div>
-        <div class="col-xs-6">
-          <h4><b>Precio: </b>{{informacionProducto.precio | currency:'USD':'symbol-narrow':'1.0-2'}}</h4>
-          <h5><b>Disponible: </b>{{informacionProducto.disponible | number}}</h5>
+        <div class="descripcion">
+          <div class="col-xs-6">
+            <img class="img-responsive" src="{{informacionProducto.imagen}}">
+          </div>
+          <div class="col-xs-6">
+            <h4><b>Precio: </b>{{informacionProducto.precio | currency:'USD':'symbol-narrow':'1.0-2'}}</h4>
+            <h5><b>Disponible: </b>{{informacionProducto.disponible | number}}</h5>
+          </div>
         </div>
-      </div>
-      <div class="owl-carousel">
-        <div class="col s12 item">
-          <a href="#"><img src="/images/makalacachimba.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/mgm.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/amanda.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/seef.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/titanes.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/tecnoessentials.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/hsd.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/nikosia.png"></a>
-        </div>
-        <div class="col s12 item">
-          <a href="#"><img src="/images/connext.png"></a>
-        </div>
-      </div>
-
-      <div class="actions">
-        <div class="form-group">
-          <a [routerLink]="[tienda]" class="btn btn-primary">Atras</a>
+        <div class="actions">
+          <div class="form-group">
+            <a [routerLink]="[tienda]" class="btn btn-primary">Atras</a>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<div class="tienda">
+  <div class="container">
+    <barra-superior></barra-superior>
+    <div class="box carrito" *ngIf="informacionProducto">
+      <h2 class="titulo animated fadeIn slow">{{informacionProducto.descripcion}}
+      </h2>
+      <ul class="producto list-group col-xs-12 animated fadeIn slow" >
+        <li class="list-group-item col-xs-12 no-padding" [ngStyle]="{background:'#ededed'}">
+          <div class="col-xs-12 no-padding">
+            <div class="img no-padding pull-left">
+              <img src="{{informacionProducto.imagen}}" alt="{{informacionProducto.descripcion}}" class="img-responsive no-padding">
+            </div>
+            <div class="informacion">
+              <p><small><b>Precio: </b>{{informacionProducto.precio | currency : 'USD' : 1-0-2 }}</small></p>
+              <p><small><b>Cantidad: </b>{{informacionProducto.disponible}}</small></p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

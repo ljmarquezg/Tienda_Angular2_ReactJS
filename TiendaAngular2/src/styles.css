@@ -68,7 +68,7 @@ a {
   height: 100%;
   position: fixed;
   z-index: 0;
-  background-color: black;
+  background-color: #636161;
   background-blend-mode: multiply;
   }
 .login .form-container{
@@ -171,10 +171,18 @@ form .ng-invalid ~ span.error, form .mensaje {
   transition: all ease 0.3s;
 }
 
-
-.box .titulo{
-  border-bottom:solid 2px lightgray;
-  margin-bottom:15px
+.flex{
+  display:flex;
+  flex-wrap: wrap;
+}
+.flex img{
+    display: flex;
+    flex: 1;
+}
+.box .titulo {
+	border-bottom: solid 2px lightgray;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
 }
 .informacion {
 	background: #ededed;
@@ -323,5 +331,6 @@ li.list-group-item .footer {
   .informacion {
   	padding: 10px 20px;
   	border-top: 0;
+    width: auto;
   }
 }
