@@ -6,41 +6,52 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class TiendaService {
+  public catalogo : Producto[];
+  public productosCatalogo : Producto[];
 
   constructor(private http : Http, private router : Router) { }
-  public catalogo : Producto[];
-  public productoCatalogo : Producto;
-
+//================Obtener Productos=============================================
   public getProductos(){
     return this.http.get('https://tienda-angular2.firebaseio.com/productos/.json')
     .map((response : Response) => {
         this.catalogo =  response.json()
+        this.productosCatalogo = this.catalogo
       }
     )
   }
-
+//================Ir a la vista detalle del producto============================
   public getDetalleProductos(idProduct:number){
-    for(let item of this.catalogo){
+    for(let item of this.productosCatalogo){
       if(item.id == idProduct){
         return item;
       }
     }
   }
-
-  public buscarProducto(id){
-    return this.http.get(`https://tienda-angular2.firebaseio.com/productos/${id}.json`)
-    .map((response : Response) => {
-        return this.productoCatalogo =  response.json()
+  //================Filtrar Productos===========================================
+  public filtrarProducto(filtro:string){
+    this.productosCatalogo = this.catalogo;
+    filtro.toLowerCase()
+    let itemMatch : Producto[] = [];
+    for(let item of this.productosCatalogo){
+      let descripcion = item.descripcion.toLowerCase();
+      if(descripcion.includes(filtro)){
+        itemMatch.push(item)
       }
-    )
+    }
+    return itemMatch;
   }
-
-  public filtrarProducto(filtro){
-    return this.http.get(`https://tienda-angular2.firebaseio.com/productos/.json`)
-    .map((response : Response) => {
-        return this.productoCatalogo =  response.json()
+  //================Actualizar Disponible=======================================
+    actualizarDisponible(id:number, value:number, devolver:boolean = false){
+      let catalogo = this.catalogo
+      for(let itemCatalogo of catalogo){
+        if (itemCatalogo.id == id){
+          if(devolver == false){
+            itemCatalogo.disponible = (Number(itemCatalogo.disponible) - value) //Restar la cantidad del carrito en disponibles
+          }else{
+            itemCatalogo.disponible = (Number(itemCatalogo.disponible) + value) //Sumar la cantidad del carrito en disponibles
+          }
+          this.productosCatalogo = this.catalogo
+        }
       }
-    )
-  }
-
+    }
 }

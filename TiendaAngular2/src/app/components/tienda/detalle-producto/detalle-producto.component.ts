@@ -5,10 +5,8 @@ import { AuthService } from "../../../services/auth.service";
 import { TiendaService} from '../../../services/tienda.service';
 import { BarraSuperiorComponent  } from '../../barra-superior/barra-superior.component';
 //======================Importar Modelos========================================
-import { ProductoCarrito } from '../../../models/ProductoCarrito';
+import { Producto } from '../../../models/Producto';
 //==============================================================================
-
-
 
 @Component({
   selector: 'detalle-producto',
@@ -16,7 +14,7 @@ import { ProductoCarrito } from '../../../models/ProductoCarrito';
   styleUrls: ['./detalle-producto.component.css']
 })
 export class DetalleProductoComponent implements OnInit {
-  informacionProducto : ProductoCarrito;
+  informacionProducto : Producto;
 
   constructor(private tiendaService : TiendaService,
     private router : Router,

@@ -8,6 +8,7 @@ export class CarritoService {
   private totales : number[];
   constructor() {
       this.totales = [];
+      this.contadorCarrito()
    }
 //============Verificar items en el carrito=====================================
   itemsCarrito(){
@@ -33,7 +34,7 @@ export class CarritoService {
     if(this.listaCarrito.length > 0){
       for(let itemGuardado of this.listaCarrito){
         if(itemGuardado.id == item.id){
-          itemGuardado.disponible = Number(itemGuardado.disponible) + Number(item.disponible)
+          itemGuardado.cantidad = Number(itemGuardado.cantidad) + Number(item.cantidad)
           return true
         }
       }
@@ -51,5 +52,4 @@ export class CarritoService {
   eliminarCarrito(listaCarrito){
     sessionStorage.setItem("Carrito", JSON.stringify(listaCarrito))
   }
-
 }

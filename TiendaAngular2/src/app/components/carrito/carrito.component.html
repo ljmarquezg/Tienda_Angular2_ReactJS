@@ -19,12 +19,12 @@
               </span>
             <h5 class="text-left">{{item.descripcion}}</h5>
             <p><small><b>Precio: </b>{{item.precio | currency : 'USD' : 1-0-2 }}</small></p>
-            <p><small><b>Cantidad: </b>{{item.disponible}}</small></p>
+            <p><small><b>Cantidad: </b>{{item.cantidad}}</small></p>
             <div class="input-group">
               <span class="input-group-btn">
                 <button class="btn btn-warning" type="button" (click)="eliminarProducto(item.id, eliminar.value)">Eliminar</button>
               </span>
-              <input type="number" [value]="0" min="0" max={{item.disponible}} class="form-control text-right" id="disponible"  #eliminar>
+              <input type="number" [value]="0" min="0" max={{item.cantidad}} class="form-control text-right" id="cantidad"  #eliminar>
             </div>
           </div>
           <div class="list-group-item footer">
@@ -32,7 +32,7 @@
               <h5><b>Subtotal: </b></h5>
             </div>
             <div class="no-padding col-xs-6 text-right">
-              <h5>{{this.carritoService.subtotal(item.precio, item.disponible) | currency : 'USD' : 1-0-2}}</h5>
+              <h5>{{this.carritoService.subtotal(item.precio, item.cantidad) | currency : 'USD' : 1-0-2}}</h5>
             </div>
           </div>
         </div>

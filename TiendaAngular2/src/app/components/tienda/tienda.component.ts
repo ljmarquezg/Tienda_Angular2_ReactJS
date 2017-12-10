@@ -7,14 +7,10 @@ import { OnChanges } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { CarritoService} from '../../services/carrito.service';
 import { TiendaService} from '../../services/tienda.service';
-//======================Importar Componentes====================================
-//import { BarraSuperiorComponent  } from '../barra-superior/barra-superior.component';
 //======================Importar Modelos========================================
-//import { Producto } from '../../models/Producto';
 import { ProductoCarrito } from '../../models/ProductoCarrito';
+import { Producto } from '../../models/Producto';
 //=====================Importar Pipes===========================================
-
-
 @Component({
   selector: 'tienda',
   templateUrl: './tienda.component.html',
@@ -24,9 +20,10 @@ import { ProductoCarrito } from '../../models/ProductoCarrito';
 export class TiendaComponent implements OnInit {
 
   private formulario : FormGroup; //Definir la variable formulario como un FormGroup
-  private listaProductos : Object[]; //Crear un objeto con la lista de tiendas obtenidos de la base de datos
-  public tiendaCarrito : ProductoCarrito; //Definir un objeto con las pro
+  private listaProductos : Producto[]; //Crear un objeto con la lista de tiendas obtenidos de la base de datos
+  public productosCarrito : ProductoCarrito; //Definir un objeto con las pro
   private titulo : string;
+  public session : string;
 
   constructor(private tiendaService : TiendaService,
               private router : Router,
@@ -40,12 +37,13 @@ export class TiendaComponent implements OnInit {
       console.log(sessionStorage.getItem("Session"))
       this.router.navigate(['/login'])
     }else{
+    this.session = sessionStorage.getItem("Carrito")
       this.formulario = new FormGroup(
         {
           'descripcion' : new FormControl(),
           'imagen': new FormControl(),
           'precio': new FormControl(),
-          'disponible': new FormControl(),
+          'cantidad': new FormControl(),
         }
       )
       this.mostrarProductos()
@@ -54,43 +52,50 @@ export class TiendaComponent implements OnInit {
 
 //================Cargar Productos==============================================
   mostrarProductos(){
-    this.tiendaService.getProductos().subscribe(
-      ()=>{
-        this.listaProductos = this.tiendaService.catalogo
-      }
-    )
+  //Verificar si existe información del catálogo
+    if(!this.tiendaService.productosCatalogo){
+      this.tiendaService.getProductos().subscribe(
+        ()=>{
+          this.listaProductos = this.tiendaService.catalogo;
+          this.checkCarrito();
+        }
+      )
+    }else{
+          this.listaProductos = this.tiendaService.productosCatalogo;
+    }
   }
 //================Agregar Productos=============================================
   agregarProducto(id:number, value:number){
-    this.tiendaService.buscarProducto(id).subscribe(
-      (tiendaEncontrado)=>{
-        if(tiendaEncontrado.disponible < value){
-          window.alert('Máxima existencia es: '+ tiendaEncontrado.disponible);
+    for (let item of this.tiendaService.productosCatalogo){
+      if(item.id == id){
+        if(item.disponible < value){
+          window.alert('Máxima existencia es: '+ item.disponible);
         }else{
-          this.tiendaCarrito = tiendaEncontrado
-          this.tiendaCarrito.disponible = value
-          this.carritoService.verificarCarrito(this.tiendaCarrito);
-          //this.cambiarEstado()
+          let cantidadActual = item.disponible;
+          //Convertir el objeto de la tienda en objeto carrito
+          this.productosCarrito = {
+            "id": item.id,
+            "descripcion": item.descripcion,
+            "imagen": item.imagen,
+            "precio": item.precio,
+            "cantidad": value
+          }
+          this.carritoService.verificarCarrito(this.productosCarrito);
+          //Actualizar el valor del producto en el catalogo
+          item.disponible = cantidadActual - value;
         }
-     }
-    )
+      }
+    }
   }
-  //================Filtrar Productos=============================================
+  //================Filtrar Productos============================================
     filtrarCatalogo(filtro){
-    //Vaciar el arreglo de objetos
-    this.listaProductos = [];
-      this.tiendaService.getProductos().subscribe(
-        ()=>{
-            for(let item of this.tiendaService.catalogo ){
-            //Convertir el arreglo de objetos en cadena de caracteres para verificar
-            //si este incluye el texto digitado en el campo de filtros.
-              if(JSON.stringify(item).includes(filtro) == true){
-                this.listaProductos.push(item); //Agregar el objeto Producto al arreglo de tiendas
-              }
-            }
-            return this.listaProductos;
-        }
-      )
+      this.listaProductos = this.tiendaService.filtrarProducto(filtro);
+    }
+  //================Actualizar Disponibles============================================
+    checkCarrito(){
+      for(let itemCarrito of this.carritoService.listaCarrito){
+        this.tiendaService.actualizarDisponible(itemCarrito.id, itemCarrito.cantidad)
+      }
     }
   //==============================================================================
 }
