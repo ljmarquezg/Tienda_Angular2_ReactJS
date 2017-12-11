@@ -26,21 +26,20 @@ export class TiendaComponent implements OnInit {
   private titulo : string;
   public session : string;
 
-  constructor(private tiendaService : TiendaService,
-              private router : Router,
-              private auth : AuthService,
-              private detectChanges:ChangeDetectorRef,
-              private carritoService : CarritoService
-            ) { this.titulo = 'Catálogo de Productos'}
+  constructor(private detectChanges:ChangeDetectorRef,  //Agergar el modelo ChangeDetectorRef para refrescar el renderizado de la página al existir algún cambio en vivo
+              private router : Router, //Agergar el módulo Router para manejar las URL de la página
+              private tiendaService : TiendaService, //Agergar el servicio TiendaService para interactuar con los items del catálogo de productos
+              private auth : AuthService, //Agergar el servicio CarritoService para interactuar con los parámetros de sesión
+              private carritoService : CarritoService //Agergar el servicio CarritoService para interactuar con los items del carrito
+            ) { this.titulo = 'Catálogo de Productos' /*Definir el título de la página acual*/}
 
 
   ngOnInit() {
-    if (!this.auth.checkSession()){
-      console.log(sessionStorage.getItem("Session"))
-      this.router.navigate(['/login'])
+    if (!this.auth.checkSession()){ //Verificar si existe una sesión iniciada
+      this.router.navigate(['/login']) //Si existe una sesión, navegar a la página de login
     }else{
-    this.session = sessionStorage.getItem("Carrito")
-      this.formulario = new FormGroup(
+    this.session = sessionStorage.getItem("Carrito") //Iniciar la sesión de Carrito verificando si existen productos en el mismo
+      this.formulario = new FormGroup( //Iniciar las variables del formulario
         {
           'descripcion' : new FormControl(),
           'imagen': new FormControl(),
@@ -48,65 +47,63 @@ export class TiendaComponent implements OnInit {
           'cantidad': new FormControl(),
         }
       )
-      this.mostrarProductos()
+      this.mostrarProductos() //Ejecutar la función mostrar productos
     }
   }
 
 //================Cargar Productos==============================================
   mostrarProductos(){
-  //Verificar si existe información del catálogo
-    if(!this.tiendaService.productosCatalogo){
-      this.tiendaService.getProductos().subscribe(
+    if(!this.tiendaService.productosCatalogo){ //Verificar si se ha cargado previamente la información del catálogo
+      this.tiendaService.getProductos().subscribe( //Ejecutar la consulta a la base de datos
         ()=>{
-          this.listaProductos = this.tiendaService.catalogo;
-          this.checkCarrito();
+          this.listaProductos = this.tiendaService.catalogo; //inicializar la lista de productos con la información de la base de datos
+          this.checkCarrito(); //Verificar si existen productos en el carrito
         }
       )
     }else{
-          this.listaProductos = this.tiendaService.productosCatalogo;
+          this.listaProductos = this.tiendaService.productosCatalogo; //Si se ha cargado previamente la información del catálogo, asignar la información actual
     }
   }
 //================Agregar Productos=============================================
   agregarProducto(id:number, value:number){
-    for (let item of this.tiendaService.productosCatalogo){
-      if(item.id == id){
-        if(item.disponible < value){
-          window.alert('Máxima existencia es: '+ item.disponible);
+    for (let item of this.tiendaService.productosCatalogo){ //Recorrer el catálogo de productos
+      if(item.id == id){ //Verificar que el id del item actual corresponda con el item del catálogo
+        if(item.disponible < value){//Si la disponibilidad es menor a la cantidad a añadir al carrito
+          window.alert('Máxima existencia es: '+ item.disponible); //Mostrar un mensaje de alerta con la cantidad maxima disponible
         }else{
-          let cantidadActual = item.disponible;
+          let cantidadActual = item.disponible; //Crear una variable con la cantidad disponible en el catalogo
           //Convertir el objeto de la tienda en objeto carrito
           this.productoCarrito = {
             "id": item.id,
             "descripcion": item.descripcion,
             "imagen": item.imagen,
             "precio": item.precio,
-            "cantidad": value
+            "cantidad": value //Asignar el valor enviádo como parámetro desde el campo de texto del producto
           }
-          this.carritoService.verificarCarrito(this.productoCarrito);
-          //Actualizar el valor del producto en el catalogo
-          item.disponible = cantidadActual - value;
+          this.carritoService.verificarCarrito(this.productoCarrito); //Verificar si el producto se encuentra en el carrito
+          item.disponible = cantidadActual - value; //Actualizar el valor del producto en el catalogo
         }
       }
     }
   }
   //================Filtrar Productos============================================
-    filtrarCatalogo(filtro){
-      this.listaProductos = this.tiendaService.filtrarProducto(filtro);
+    filtrarCatalogo(filtro:string){
+      this.listaProductos = this.tiendaService.filtrarProducto(filtro); //Actualizar el catálogo de productos mostrados de acuerdo al resultado obtenido en el filtro de productos
     }
   //================Actualizar Disponibles============================================
     checkCarrito(){
-      for(let itemCarrito of this.carritoService.listaCarrito){
-        this.tiendaService.actualizarDisponible(itemCarrito.id, itemCarrito.cantidad)
+      for(let itemCarrito of this.carritoService.listaCarrito){ //Recorrer el arreglo de productos almacenados en el carrito
+        this.tiendaService.actualizarDisponible(itemCarrito.id, itemCarrito.cantidad) //Actualizar las cantidades de los productos a agregar en el carrito
       }
     }
   //================Obtener Cantidad De Productos En Carrito======================
   obtenerCantidad(id:number){
-    for(let item of this.carritoService.listaCarrito){
-      if(item.id == id){
-        return item.cantidad
+    for(let item of this.carritoService.listaCarrito){ //Recorrer el arreglo de productos
+      if(item.id == id){ //Comparar los id del producto en el arreglo con el id del producto enviado como parámetro
+        return item.cantidad //Devolver la cantidad
       }
     }
-    return null
+    return null //Devolver vacio
   }
   //==============================================================================
 }

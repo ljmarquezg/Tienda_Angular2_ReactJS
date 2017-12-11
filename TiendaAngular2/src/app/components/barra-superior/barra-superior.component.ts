@@ -1,6 +1,10 @@
-import { Component, OnInit , trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+//======================Importar Servicios======================================
 import { AuthService } from '../../services/auth.service';
 import { CarritoService } from '../../services/carrito.service';
+//==============================================================================
+
 
 @Component({
   selector: 'barra-superior',
@@ -8,21 +12,20 @@ import { CarritoService } from '../../services/carrito.service';
   styleUrls: ['./barra-superior.component.css'],
 })
 export class BarraSuperiorComponent implements OnInit {
-  nuevoItem = 'normal';
+  private url : string
 
-  constructor(private auth : AuthService, private carritoService : CarritoService) { }
+  constructor(private auth : AuthService, //Agergar el servicio AuthService para interactuar con los parámetros de sesión
+              private carritoService : CarritoService, //Agergar el servicio CarritoService para interactuar con los items del carrito
+              private activatedRoute : ActivatedRoute //incluir el módulo ActivatedRoute para determinar el url actual
+            ) { }
 
   ngOnInit() {
-
-  }
-
-  cambiarEstado(){
-    this.nuevoItem == 'normal' ? this.nuevoItem = 'agregado' : this.nuevoItem = 'normal';
-    console.log('animando')
+      this.url =  this.activatedRoute.snapshot.url[0].path; //Verificar el url actual
+      return this.url;
   }
 
   cerrarSesion(){
-    this.auth.logout();
+    this.auth.logout(); //Ejecutar la funcion de cerrar sesión
   }
 
 }

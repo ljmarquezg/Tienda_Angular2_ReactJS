@@ -1,30 +1,9 @@
 @import url('./assets/css/bootstrap.min.css');
 @import url('./assets/css/owl.carousel.min.css');
 @import url('./assets/css/owl.theme.default.min.css');
-@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash');
-/* fallback */
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(./assets/fonts/material-icons.woff2) format('woff2');
-}
+@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Poppins');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Poppins Regular'), local('Poppins-Regular'), url(./assets/fonts/poppins.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
-@font-face {
-  font-family: 'Pacifico';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/Q_Z9mv4hySLTMoMjnk_rCfesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
 .btn-secondary {
 	border: solid 1px orange;
 	margin-left: 5px;
@@ -55,8 +34,6 @@
   -moz-font-feature-settings: 'liga';
   -moz-osx-font-smoothing: grayscale;
 }
-
-/*@import url('https://fonts.googleapis.com/css?family=Poppins');*/
 
 html, body{
   font-family:  'Poppins', sans-serif;
@@ -259,10 +236,11 @@ form .ng-invalid ~ span.error, form .mensaje {
   font-size: 12px;
   height: 30px
 }
-.barra-superior{
-  background: #802314;
-  color: white;
-  z-index: 20
+.barra-superior {
+	background: #802314;
+	color: white;
+	z-index: 20;
+	height: 75px;
 }
 .barra-superior a{
   color: #e4e4e4;
@@ -282,7 +260,16 @@ form .ng-invalid ~ span.error, form .mensaje {
   display: inline-block;
 
 }
-.navbar-brand span {
+.navbar-brand {
+	float: left;
+	height: 50px;
+	padding: 15px 15px;
+	font-size: 18px;
+	line-height: 20px;
+	text-align: center;
+}
+
+.navbar-brand p {
 	font-family: 'Berkshire Swash', cursive;
 	top: -5px;
 	position: relative;
@@ -291,6 +278,10 @@ form .ng-invalid ~ span.error, form .mensaje {
 .navbar-nav > li > a {
 	padding: 0;
 	margin: 0 15px;
+	text-align: center;
+}
+.navbar-nav > li > a.active {
+	border-bottom: solid 2px;
 }
 .nav > li > a:focus, .nav > li > a:hover {
 	text-decoration: none;
@@ -408,8 +399,8 @@ li.list-group-item .footer {
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
     border-radius: 50%;
     width: 120px;
     height: 120px;
