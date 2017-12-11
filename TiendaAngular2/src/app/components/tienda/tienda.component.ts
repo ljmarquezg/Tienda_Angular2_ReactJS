@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms'; //Importar los componentes ForModule, FormControl y Validator para manejar y validar los formularios
 import { CurrencyPipe } from '@angular/common'
 import { OnChanges } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 //======================Importar Servicios======================================
 import { AuthService } from "../../services/auth.service";
 import { CarritoService} from '../../services/carrito.service';
@@ -21,13 +22,14 @@ export class TiendaComponent implements OnInit {
 
   private formulario : FormGroup; //Definir la variable formulario como un FormGroup
   private listaProductos : Producto[]; //Crear un objeto con la lista de tiendas obtenidos de la base de datos
-  public productosCarrito : ProductoCarrito; //Definir un objeto con las pro
+  public productoCarrito : ProductoCarrito; //Definir un objeto con las pro
   private titulo : string;
   public session : string;
 
   constructor(private tiendaService : TiendaService,
               private router : Router,
               private auth : AuthService,
+              private detectChanges:ChangeDetectorRef,
               private carritoService : CarritoService
             ) { this.titulo = 'Catálogo de Productos'}
 
@@ -73,14 +75,14 @@ export class TiendaComponent implements OnInit {
         }else{
           let cantidadActual = item.disponible;
           //Convertir el objeto de la tienda en objeto carrito
-          this.productosCarrito = {
+          this.productoCarrito = {
             "id": item.id,
             "descripcion": item.descripcion,
             "imagen": item.imagen,
             "precio": item.precio,
             "cantidad": value
           }
-          this.carritoService.verificarCarrito(this.productosCarrito);
+          this.carritoService.verificarCarrito(this.productoCarrito);
           //Actualizar el valor del producto en el catalogo
           item.disponible = cantidadActual - value;
         }
@@ -97,5 +99,14 @@ export class TiendaComponent implements OnInit {
         this.tiendaService.actualizarDisponible(itemCarrito.id, itemCarrito.cantidad)
       }
     }
+  //================Obtener Cantidad De Productos En Carrito======================
+  obtenerCantidad(id:number){
+    for(let item of this.carritoService.listaCarrito){
+      if(item.id == id){
+        return item.cantidad
+      }
+    }
+    return null
+  }
   //==============================================================================
 }

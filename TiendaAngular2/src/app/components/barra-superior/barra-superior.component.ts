@@ -6,30 +6,6 @@ import { CarritoService } from '../../services/carrito.service';
   selector: 'barra-superior',
   templateUrl: './barra-superior.component.html',
   styleUrls: ['./barra-superior.component.css'],
-  animations: [
-    trigger('agregarItem', [
-      state('normal',
-        style({
-          'background-color': 'red',
-          'transform': 'translateX(0)'
-        })
-      ),
-      state('agregado',
-        style({
-          'opacity': 1,
-          'transform': 'translateX(0)'
-        })
-      ),
-      transition('normal => agregado', [
-        style({
-          'opacity': 1,
-          'transform': 'translateX(-100px)'
-        }),
-        animate(200)
-      ])
-    ])
-
-  ]
 })
 export class BarraSuperiorComponent implements OnInit {
   nuevoItem = 'normal';

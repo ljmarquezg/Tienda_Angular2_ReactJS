@@ -18,20 +18,12 @@ export class LoginComponent implements OnInit {
   email : string;
   password: string;
 
-  //===========================================================
-  // Constructor
-  //==========================================================
 
   constructor(private db: AngularFire, private auth : AuthService, private router: Router) {
     if(this.auth.checkSession()){
        this.router.navigate(['tienda'])
      }
   };
-
-
-  //===========================================================
-  // Métodos de inicialización
-  //==========================================================
 
   ngOnInit() {
     this.email = "";
@@ -50,11 +42,10 @@ export class LoginComponent implements OnInit {
   checkLogin(){
     if(this.loginForm.valid){ /*Si el formulario se envía correctamente*/
 
-      //================================================================================================================
       // Dar formato al email eliminando el caracter @ y . para que coincida con el valor alojado en la base de datos
-      //================================================================================================================
       this.email = this.loginForm.value.email.toLowerCase().replace(/[^a-zA-Z 0-9.]+/g,'').replace(/\./g,'');
       this.password = this.loginForm.value.password; /*Asignar el valor password del formulario al valor password del objeto Usuario*/
+      console.log(this.email)
 
       //================================================================================================================
       //  De acuerdo a   documentación de firebase2:
@@ -81,35 +72,4 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-
-  /*checkLogin(){
-  let loginUser = new Usuario; //Crear un objeto con las propiedades de Usuario
-  if(this.loginForm.valid){ /*Si el formulario se envía correctamente
-  loginUser.email = this.loginForm.value.email.toLowerCase(); /*Asignar el valor email del formulario al valor email del objeto Usuario*/
-  /*  loginUser.password = this.loginForm.value.password; /*Asignar el valor password del formulario al valor password del objeto Usuario*/
-  /*this.auth.getUsuarios().subscribe((data:Usuario[]) => {
-  /*Recorrer el array de usuarios*/
-  /*for( let i in data){
-  /*Comparar que existe el email*/
-  /*if (data[i].email == loginUser.email){
-  console.log("Email: " +data[i].email+ " encontrado"); /*Mostrar mensaje en cónsola.*/
-  /*Si el email coincide, Verificar la contraseña*/
-  /*if (data[i].password == loginUser.password ){
-  console.log("Iniciando sesión"); /*Mostrar mensaje en cónsola*/
-  /*this.mensaje = "Iniciando Sesión"; /*Mostrar mensaje en el formulario*/
-  /*sessionStorage.setItem("Session", loginUser.email); /*Definir el sessionStorage la llave "Session" con el valor del email validado*/
-  /*this.router.navigate(['tienda']); /*Redireccionar a la tienda*/
-  /*} else {
-  /*console.log("Error de contraseña"); /*Mostrar mensaje en cónsola*/
-  /*this.mensaje = 'Contraseña incorrecta'; /*Mostrar mensaje  de error  en formulario*/
-  /*  }
-} else {
-this.mensaje = "El usuario" +loginUser.email+ " no existe"; /*Mostrar mensaje de error en el formulario*/
-/*}
-}
-})
-}
-}*/
-
-
 }

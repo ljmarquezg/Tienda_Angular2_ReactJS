@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router'; //Inyectar el componente router para manejar redirecciones URL
-//======================Importar Componentes====================================
+import { Router, ActivatedRoute} from '@angular/router';
+//======================Importar Servicios====================================
 import { AuthService } from "../../../services/auth.service";
 import { TiendaService} from '../../../services/tienda.service';
+import { CarritoService} from '../../../services/carrito.service';
 import { BarraSuperiorComponent  } from '../../barra-superior/barra-superior.component';
 //======================Importar Modelos========================================
 import { Producto } from '../../../models/Producto';
+import { ProductoCarrito } from '../../../models/ProductoCarrito';
 //==============================================================================
 
 @Component({
@@ -14,12 +16,17 @@ import { Producto } from '../../../models/Producto';
   styleUrls: ['./detalle-producto.component.css']
 })
 export class DetalleProductoComponent implements OnInit {
-  informacionProducto : Producto;
+  private informacionProducto : Producto;
+  private productoCarrito : ProductoCarrito;
+  private actualCarrito : boolean;
 
   constructor(private tiendaService : TiendaService,
     private router : Router,
     private auth : AuthService,
-    private activatedRoute : ActivatedRoute) { }
+    private carritoService : CarritoService,
+    private activatedRoute : ActivatedRoute) {
+      this.actualCarrito = false
+    }
 
     ngOnInit() {
       if (!this.auth.checkSession()){
@@ -29,13 +36,71 @@ export class DetalleProductoComponent implements OnInit {
         this.detalleProducto()
       }
     }
-
+    //================Agregar Productos=============================================
     detalleProducto(){
-      this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe(params => {
+      if(this.tiendaService.cargarCatalogo()){
+        this.informacionProducto = this.tiendaService.getDetalleProductos(params['id']);
+      }else{
         this.tiendaService.getProductos().subscribe(
           () => {
+            this.checkCarrito();
             this.informacionProducto = this.tiendaService.getDetalleProductos(params['id']);
           })
-        });
+        }
+      });
+    }
+    //================Agregar Productos=============================================
+    agregarProducto(id:number, value:number){
+    for (let item of this.tiendaService.productosCatalogo){
+      if(item.id == id){
+        if(item.disponible < value){
+          window.alert('Máxima existencia es: '+ item.disponible);
+        }else{
+          let cantidadActual = item.disponible;
+          this.productoCarrito = {//Convertir el objeto de la tienda en objeto carrito
+            "id": item.id,
+            "descripcion": item.descripcion,
+            "imagen": item.imagen,
+            "precio": item.precio,
+            "cantidad": value
+          }
+          this.carritoService.verificarCarrito(this.productoCarrito);
+          item.disponible = cantidadActual - value;//Actualizar el valor del producto en el catalogo
+
+        }
       }
     }
+  }
+  //================Obtener Cantidad De Productos En Carrito======================
+  obtenerCantidad(id:number){
+    for(let item of this.carritoService.listaCarrito){
+      if(item.id == id){
+        return item.cantidad
+      }
+    }
+    return null
+  }
+  //================Actualizar Existencias========================================
+  checkCarrito(){
+    for(let itemCarrito of this.carritoService.listaCarrito){
+      this.tiendaService.actualizarDisponible(itemCarrito.id, itemCarrito.cantidad)
+    }
+  }
+  //================Navegacion Atras=============================================
+  navegacionAtras(id:number){
+    let value = Number(id-1);
+    if(value >= 0){
+      return value;
+    }
+    return id
+  }
+  //================Navegacion Siguiente=========================================
+  navegacionSiguiente(id:number){
+    if(id < this.tiendaService.cargarCatalogo().length){
+      let value = Number(id+1);
+      return value;
+    }
+    return id
+  }
+}

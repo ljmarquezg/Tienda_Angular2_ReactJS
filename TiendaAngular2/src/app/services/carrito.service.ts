@@ -16,7 +16,7 @@ export class CarritoService {
       this.listaCarrito = JSON.parse(sessionStorage.getItem("Carrito"));
       return JSON.parse(sessionStorage.getItem("Carrito"));
     }
-    console.log("Tu carrito está vacio");
+    return 0;
   }
 //============Contador de items en menu=========================================
   contadorCarrito(){
