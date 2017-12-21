@@ -10,7 +10,6 @@ class Catalogo extends React.Component {
 //------------------------------------------------------------------------------
   componentWillMount(){
     this.checkCarrito(this.props.id)
-    console.log(this.props)
   }
 //===============================================================================
 //                    Constructor
@@ -57,7 +56,7 @@ class Catalogo extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="card-action"><Link to={`/producto/${this.props.id}`}>Ver detalle</Link></div>
+            <div className="card-action"><Link to={`/tienda/producto/${this.props.id}`}>Ver detalle</Link></div>
           </div>
         </div>
     )
@@ -97,9 +96,7 @@ class Catalogo extends React.Component {
     let productoCarrito = this.props
     for(let itemCarrito of this.state.listaCarrito){ //Recorrer el arreglo de productos almacenados en el carrito
       if(itemCarrito.id == productoCarrito.id){
-        console.log(itemCarrito.id)
         let actualizarDisponible = (Number(this.state.disponible) - Number(itemCarrito.cantidad))
-        console.log(actualizarDisponible)
         this.setState({disponible : actualizarDisponible, contadorCarrito : itemCarrito.cantidad})
       }
       (itemCarrito.id, itemCarrito.cantidad) //Actualizar las cantidades de los productos a agregar en el carrito

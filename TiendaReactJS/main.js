@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
 //import { Router, Route, browserHistory, IndexRoute} from 'react-router';
 import { BrowserRouter as Router, Route, browserHistory, IndexRoute, Link } from 'react-router-dom'
+import {IntlProvider, FormattedMessage} from 'react-intl';
 //=================Importar Componentes======================
 //import App from './App.jsx';
 import LoginForm from './components/Login.jsx';
@@ -14,13 +15,14 @@ import Producto from './components/tienda/Producto.jsx'
 //import LoginFirebase from './components/Login.jsx';
 
 ReactDOM.render(
-
-<Router>
-  <div>
-    <Route exact path="/" component={LoginForm}/>
-    <Route path="/tienda" component={App}/>
-  </div>
-</Router>
+<IntlProvider locale="en">
+  <Router>
+    <div>
+      <Route exact path="/" component={LoginForm}/>
+      <Route path="/tienda" component={()=><App locales={['en-US']} />}/>
+    </div>
+  </Router>
+</IntlProvider>
 
 
   , document.getElementById('app')

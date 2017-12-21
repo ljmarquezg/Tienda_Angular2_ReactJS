@@ -29,6 +29,7 @@
 .card.horizontal .card-image{
   max-width: 100%
 }
+
 .container {
 	width: 90% !important;
   max-width: 1980px;
@@ -40,6 +41,7 @@ nav {
 	width: 100%;
 	height: 64px;
 	line-height: 56px;
+  border-bottom: solid 2px #ffffff3b
 }
 nav li{
   position: relative;
@@ -163,12 +165,32 @@ form .mensaje {
     overflow: auto;
 }
 .box {
-	box-shadow: 0 0 2px 0 lightgray;
 	background: #fff9;
-	border-radius: 5px;
-	overflow: hidden;
+	border-radius: 0 0 5px 5px;
+	overflow-x: hidden;
+  overflow-y: auto;
 	position: relative;
+  max-height: 85vh;
+  height: 100%;
+
 }
+
+.carrito .card.horizontal {
+	margin-bottom: 0;
+}
+.carrito .card-action{
+	float: left;
+	width: 100%;
+	background: #eaeaea;
+	padding: 2px 20px;
+}
+
+.carrito .btn-floating.halfway-fab {
+	position: absolute;
+	right: 24px;
+	top: 20px;
+}
+
 .badge.carrito {
 	position: absolute;
 	top: 10px;
@@ -316,6 +338,27 @@ form .mensaje {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+    color: red;
+  }
+
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+    color: black
+  }
+}
+
+.pulse {
+  animation-name: pulse;
+}
+
 @media(min-width: 998px){
   nav .brand-logo {
   	left: 20px;
@@ -327,6 +370,12 @@ form .mensaje {
   	display: flex;
   }
   .card.horizontal .card-image{
-    max-width: 50%
+    max-width: 100%
+  }
+  .card.horizontal .card-image img {
+  	border-radius: 2px 0 0 2px;
+  	max-width: 100%;
+  	width: auto;
+  	height: 215px;
   }
 }
