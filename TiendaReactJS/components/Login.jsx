@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as firebase from 'firebase';
 import * as request from 'superagent';
-import Tienda from './Tienda.jsx';
+import App from './App.jsx';
 import {  BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 //import {  BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 //=========Importar Componentes=========================
-//import Componente2 from '../componente2.jsx';
 import LoginFirebase from './FirebaseDB.jsx';
 //========================================================
 
@@ -71,7 +70,7 @@ class LoginForm extends React.Component{
 //============Acciones Renderizado==============================================
     render(){
     if (this.checkSession()){
-      return <Redirect to='/tienda'/>
+      return <Redirect to='/tienda/catalogo'/>
     }
       return(
         <div className="login row">

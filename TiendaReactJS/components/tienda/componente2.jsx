@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect, browserHistory, IndexRoute } from 'react-router-dom'
-import Tienda from '../Tienda.jsx';
+//import Tienda from '../Tienda.jsx';
 import Producto from './Producto.jsx';
 import Carrito from './Carrito.jsx';
 import LoginForm from '../Login.jsx';
