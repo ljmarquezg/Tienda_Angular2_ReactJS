@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import * as firebase from 'firebase';
 import update from 'immutability-helper'; //Manejo de arrays
 import BarraNavegacion from './BarraNavegacion.jsx';
 
@@ -9,7 +10,7 @@ class Catalogo extends React.Component {
 //                    Component Will Mount
 //------------------------------------------------------------------------------
   componentWillMount(){
-    this.checkCarrito(this.props.id)
+    this.checkCarrito(this.props.id);
   }
 //===============================================================================
 //                    Constructor
@@ -43,7 +44,7 @@ class Catalogo extends React.Component {
              </div>
             <div className="card-content">
               <div className="informacion blue-grey-text text-darken-2">
-                <span hidden={this.state.contadorCarrito ? false : true}className="badge carrito"><small className="white-text text-shadow"><i className="material-icons left">shopping_cart</i> <p className="left  ">{this.state.contadorCarrito}</p></small></span>
+                <span hidden={this.state.contadorCarrito ? false : true}className="badge carrito"><Link to="/carrito"><small className="white-text text-shadow"><i className="material-icons left">shopping_cart</i> <p className="left  ">{this.state.contadorCarrito}</p></small></Link></span>
                 <p><b>Precio: </b>{this.props.precio}</p>
                 <p><b>Disponibles: </b>{this.state.disponible ? this.state.disponible : 'Agotado'}</p>
                 <div className="input-group" >
@@ -56,7 +57,7 @@ class Catalogo extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="card-action"><Link to={`/tienda/producto/${this.props.id}`}>Ver detalle</Link></div>
+            <div className="card-action"><Link to={`/producto/${this.props.id}`}>Ver detalle</Link></div>
           </div>
         </div>
     )
@@ -69,19 +70,23 @@ class Catalogo extends React.Component {
 //--------------------Agregar Productos-----------------------------------------
   agregarProducto(){
      let cantidad = this.state.inputValue
+     if (cantidad <=0) {
+      alert('Seleccione una cantidad válida');
+      return
+     }
      if(this.state.disponible < cantidad){
        alert('Máxima existencia es: '+ this.state.disponible);    //Mostrar un mensaje de alerta con la cantidad maxima disponible
      }else{
-       let disponibles = (Number(this.state.disponible) - Number(cantidad))
-       let agregarACarrito = (Number(this.state.contadorCarrito) + Number(cantidad))
-       this.setState({disponible : disponibles})
-       this.setState({contadorCarrito : agregarACarrito})
+       let disponibles = (Number(this.state.disponible) - Number(cantidad));
+       let agregarACarrito = (Number(this.state.contadorCarrito) + Number(cantidad));
+       this.setState({disponible : disponibles});
+       this.setState({contadorCarrito : agregarACarrito});
        this.state.productoCarrito.id =  this.props.id;
        this.state.productoCarrito.descripcion =  this.props.descripcion;
        this.state.productoCarrito.imagen =  this.props.imagen;
        this.state.productoCarrito.precio =  this.props.precio;
        this.state.productoCarrito.cantidad = (Number(this.state.productoCarrito.cantidad) +  Number(cantidad));
-       this.props.actualizarDisponible(this.state.productoCarrito, cantidad, false)
+       this.props.actualizarDisponible(this.state.productoCarrito, cantidad, false);
      }
   }
 //------------------------------------------------------------------------------
@@ -96,10 +101,10 @@ class Catalogo extends React.Component {
     let productoCarrito = this.props
     for(let itemCarrito of this.state.listaCarrito){ //Recorrer el arreglo de productos almacenados en el carrito
       if(itemCarrito.id == productoCarrito.id){
-        let actualizarDisponible = (Number(this.state.disponible) - Number(itemCarrito.cantidad))
-        this.setState({disponible : actualizarDisponible, contadorCarrito : itemCarrito.cantidad})
+        let actualizarDisponible = (Number(this.state.disponible) - Number(itemCarrito.cantidad));
+        this.setState({disponible : actualizarDisponible, contadorCarrito : itemCarrito.cantidad});
       }
-      (itemCarrito.id, itemCarrito.cantidad) //Actualizar las cantidades de los productos a agregar en el carrito
+      //(itemCarrito.id, itemCarrito.cantidad); //Actualizar las cantidades de los productos a agregar en el carrito
     }
   }
 //------------------------------------------------------------------------------

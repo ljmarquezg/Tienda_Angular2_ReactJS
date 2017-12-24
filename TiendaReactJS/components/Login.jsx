@@ -70,7 +70,7 @@ class LoginForm extends React.Component{
 //============Acciones Renderizado==============================================
     render(){
     if (this.checkSession()){
-      return <Redirect to='/tienda/catalogo'/>
+      return <Redirect to='/tienda'/>
     }
       return(
         <div className="login row">

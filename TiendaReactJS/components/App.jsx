@@ -8,6 +8,7 @@ import BarraNavegacion from './tienda/BarraNavegacion.jsx';
 import Carrito from './tienda/Carrito.jsx';
 import Tienda from './tienda/Tienda.jsx';
 import Catalogo from './tienda/Catalogo.jsx';
+import Producto from './tienda/Producto.jsx';
 
 class App extends React.Component{
   constructor(props) {
@@ -31,8 +32,9 @@ class App extends React.Component{
     return(
       <div className="tienda row">
         <div className="container">
-          <Route path="/tienda/catalogo" component={()=><Tienda />}/>
-          <Route path='/tienda/carrito' component={() => <Carrito /> }/>
+          <Route exact path='/tienda/catalogo' activeClassName="active"  component={ Tienda }/>
+          <Route exact path='/tienda/carrito'  activeClassName="active" component={ Carrito  }/>
+          <Route path='/tienda/producto/:idProducto'  activeClassName="active" component={ Producto } />
         </div>
       </div>
     )

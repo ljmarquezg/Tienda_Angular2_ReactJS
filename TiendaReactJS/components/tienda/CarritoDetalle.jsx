@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-//import update from 'immutability-helper'; //Manejo de arrays
 import { FormattedMessage } from 'react-intl';
 
 class CarritoDetalle extends React.Component {
@@ -38,7 +37,7 @@ class CarritoDetalle extends React.Component {
       <div className="col s12 animated fadeIn fast">
       <div className="card horizontal">
       <div className="card-image">
-      <Link to={`/tienda/producto/${this.props.id}`}>
+      <Link to={`/producto/${this.props.id}`}>
       <img src={this.props.imagen}/>
       </Link>
       </div>
@@ -98,35 +97,6 @@ class CarritoDetalle extends React.Component {
     this.props.actualizarDisponible(this.state.productoCarrito, cantidad, remover)
     this.subtotal(this.props.precio, cantidad)
     this.setState({productoCarrito : JSON.parse(sessionStorage.getItem("Carrito"))})
-    console.log(JSON.parse(sessionStorage.getItem("Carrito")))
-  }
-
-
-  eliminarProducto(borrar:boolean = false){
-    let listaProductos = this.state.listaProductos
-    this.setState({cantidad : cantidad})
-    this.subtotal(this.props.precio, cantidad)
-    for (let item of listaProductos){
-      if (item.id == this.props.id){
-        if (cantidad == 0 || borrar == true){
-          //let index = listaProductos.indexOf(item); //Verificar la posición del producto actual en el arreglo de productos almacenados en el carrito
-          //let newArray = listaProductos.splice(index, 1); //Eliminar el objeto Producto en la posición actual del item en el arreglo de objetos
-          //this.setState({listaProductos : this.removerItem()})
-          this.actualizarCarrito(1)
-          //console.log(this.state.listaProductos)
-          return
-        }
-        item.cantidad = cantidad
-        //this.setState({listaProductos : listaProductos})  //Actualizar la lista de productos
-        this.props.actualizarCarrito(listaProductos) //Enviar el nuvo arreglo de productos como parámetro a actualizar en los items del carrito
-      }
-    }
-  }
-  //-----------------Actualizar Carrito---------------------------------------------
-  actualizarCarrito(listado){
-    this.contador()
-    this.setState({cantidad1 : this.state.contador * 2})
-    this.props.actualizarCarrito(0)
   }
 
   removerItem(item){
@@ -135,10 +105,7 @@ class CarritoDetalle extends React.Component {
     this.state.listaProductos.splice(index, 1)
     this.setState({listaProductos: this.state.listaProductos})
   }
-    
-  componentDidMount(){
-    //console.log('subtotal: '+this.state.subtotal)
-  }
+
 }
 
 

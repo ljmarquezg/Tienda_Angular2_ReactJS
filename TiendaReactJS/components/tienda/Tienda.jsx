@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import update from 'immutability-helper'; //Manejo de arrays
 import * as firebase from 'firebase';
 import BarraNavegacion from './BarraNavegacion.jsx';
 //import CatalogoRow from './CatalogoRow.jsx';
@@ -19,7 +18,7 @@ class Tienda extends React.Component{
   }
   //==================Component Will Mount========================================
   componentWillMount(){
-    if(this.state.catalogo == ""){                                                   //Verificar si se ha cargado previamente la información del catálogo
+    //if(this.state.catalogo == ""){                                                   //Verificar si se ha cargado previamente la información del catálogo
       const listaProductos = []                                                 //Arreglo temporal de objetos para almacenar todos los productos
       firebase.database().ref("productos").once("value").then((snapshot) => {
         snapshot.forEach(function(childSnapshot) {
@@ -30,16 +29,22 @@ class Tienda extends React.Component{
         this.setState({catalogo : listaProductos });
         this.setState({productos : this.state.catalogo});
       })
-    }else{
-      alert(this.state.catalogo)
-    }
+    //}
   }
+  //==============================================================================
+  //                    Render
+  //------------------------------------------------------------------------------
   render(){
+  if(!sessionStorage.getItem('Session')){                                       //Verificar que exista sesion iniciada
+    return <Redirect to="/" />
+  }
+
     return(
-      <div>
+    <div className="tienda row">
+      <div className="container">
         <BarraNavegacion contador={this.contadorCarrito()}/>
         <div className="left lista-productos box">
-          <div className="row col s12 blue darken-1 animated fadeInDown fast">
+          <div className="col s12 blue darken-1 animated fadeInDown fast">
             <h4 className="col m6 s12 white-text left ">Cátalogo de productos</h4>
             <h4 className="right col m6 s12 input-field">
             <i className="material-icons prefix white-text">search</i>
@@ -52,14 +57,17 @@ class Tienda extends React.Component{
         }
         </div>
       </div>
+      </div>
     )
   }
+  //==============================================================================
+  //                    Funciones
+  //------------------------------------------------------------------------------
   mostrarProductos(){
     return this.state.productos.map(
       (producto) => { return <Catalogo actualizarDisponible={this.actualizarDisponible} productos={this.state.productos} key={ producto.id } id={producto.id}  nombre={ producto.nombre } imagen={ producto.imagen } descripcion={ producto.descripcion } disponible={ producto.disponible } precio ={producto.precio} /> }
     )
   }
-
   //============================================================================
   //                    Filtrar Productos
   //----------------------------------------------------------------------------
@@ -78,7 +86,6 @@ class Tienda extends React.Component{
         this.state.productos = []
       }
     }
-
     //=============================================================================
     //             Guardar Items en el carrito
     //--------------Actualizar Disponible------------------------------------------
@@ -92,7 +99,6 @@ class Tienda extends React.Component{
         }
       }
     }
-
     //-------------Verificar Carrito------------------------------------------------
     verificarCarrito(item, cantidad){
       if(this.guardarCarrito(item, cantidad) == false){                                //Verificar que el item enviado como parámetro no exista previamente en el arreglo de objetos de productos
@@ -127,15 +133,6 @@ class Tienda extends React.Component{
     //--------------------Contador de items en menu---------------------------------
     contadorCarrito(){
       return this.itemsCarrito().length //Contar la cantidad de items en el carrito
-    }
-    //--------------------Obtener Cantidad De Productos En Carrito------------------
-    obtenerCantidad(id:number){
-      for(let item of this.state.listaCarrito){ //Recorrer el arreglo de productos
-        if(item.id == id){ //Comparar los id del producto en el arreglo con el id del producto enviado como parámetro
-          return item.cantidad //Devolver la cantidad
-        }
-      }
-      return null //Devolver vacio
     }
   }
   export default Tienda;
