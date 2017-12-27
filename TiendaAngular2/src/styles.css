@@ -134,6 +134,27 @@ form .ng-invalid ~ span.error, form .mensaje {
 	overflow: hidden;
 	position: relative;
 }
+
+.lista-productos::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #802314;
+	border-radius: 10px;
+}
+
+.lista-productos::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #802314;
+}
+
+.lista-productos::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background: #f3f3f3;
+  box-shadow : 0 0 2px black;
+}
+
 .box.carrito {
 	padding:20px;
 }

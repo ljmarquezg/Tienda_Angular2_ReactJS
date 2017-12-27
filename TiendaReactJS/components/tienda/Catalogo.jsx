@@ -38,8 +38,8 @@ class Catalogo extends React.Component {
     return (
         <div className="col s12 m4 l3 animated fadeIn fast">
           <div className="card">
-            <div className="card-image">
-              <img src={this.props.imagen}/>
+            <div className={this.state.disponible ? 'card-image' : 'card-image grayscale'}>
+              <img src={this.props.imagen} />
               <span className="card-title  text-shadow">{this.props.descripcion}</span>
              </div>
             <div className="card-content">

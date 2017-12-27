@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as firebase from 'firebase';
 import * as request from 'superagent';
-import App from './App.jsx';
 import {  BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
-//import {  BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
 //=========Importar Componentes=========================
 import LoginFirebase from './FirebaseDB.jsx';
 //========================================================
