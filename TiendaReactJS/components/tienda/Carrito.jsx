@@ -176,8 +176,9 @@ actualizarDB(itemCatalogo, cantidad){
       }else{
         let counter = (Number(this.state.counter) + 1)                                     //Si no, Crear una variable contador
         if(counter == this.state.listaCarrito.length){                                     //Cuando la variable contador sea igual al número de productos en el carrito (se haya recorrido el arreglo)
-        this.vaciarCarrito()                                                               //Vaciar carrito
-        this.setState({ redirect : true })                                                 //Cambiar el estado de redireccion a true
+          this.vaciarCarrito()                                                               //Vaciar carrito
+          this.setState({ counter : counter})                                                //Actualizar el estado de la variable contador por el contador actual
+          this.setState({ redirect : true })                                                 //Cambiar el estado de redireccion a true
         }else{
           this.setState({ counter : counter})                                              //Actualizar el estado de la variable contador por el contador actual
         }
